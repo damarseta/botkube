@@ -7,7 +7,7 @@ builds:
   main: cmd/botkube/main.go
   ldflags: &ldflags
   - -s -w
-    -X github.com/infracloudio/botkube/pkg/version.Version={{.Tag}}
+    -X github.com/infracloudio/botkube/pkg/version.Version=latest
     -X github.com/infracloudio/botkube/pkg/version.GitCommitID={{.Commit}}
     -X github.com/infracloudio/botkube/pkg/version.BuildDate={{.Date}}
   env:
@@ -21,29 +21,29 @@ builds:
   goarm:
     - 7
 snapshot:
-  name_template: "{{ .Tag }}"
+  name_template: "latest"
 changelog:
   skip: true
 dockers:
 - image_templates:
-  - 'ghcr.io/prasadg193/botkube:{{ .Tag }}-amd64'
+  - 'ghcr.io/prasadg193/botkube:latest-amd64'
   #use_buildx: true
   use: buildx
   dockerfile: 'build/Dockerfile'
   build_flag_templates:
   - "--platform=linux/amd64"
-  - "--build-arg=botkube_version={{ .Tag }}"
+  - "--build-arg=botkube_version=latest"
 - image_templates:
-  - 'ghcr.io/prasadg193/botkube:{{ .Tag }}-arm64'
+  - 'ghcr.io/prasadg193/botkube:latest-arm64'
   #use_buildx: true
   use: buildx
   goarch: arm64
   dockerfile: 'build/Dockerfile'
   build_flag_templates:
   - "--platform=linux/arm64"
-  - "--build-arg=botkube_version={{ .Tag }}"
+  - "--build-arg=botkube_version=latest"
 - image_templates:
-  - 'ghcr.io/prasadg193/botkube:{{ .Tag }}-armv7'
+  - 'ghcr.io/prasadg193/botkube:latest-armv7'
   #use_buildx: true
   use: buildx
   goarch: arm
@@ -51,14 +51,14 @@ dockers:
   dockerfile: 'build/Dockerfile'
   build_flag_templates:
   - "--platform=linux/arm"
-  - "--build-arg=botkube_version={{ .Tag }}"
+  - "--build-arg=botkube_version=latest"
 
 docker_manifests:
-- name_template: ghcr.io/prasadg193/botkube:{{ .Tag }}
+- name_template: ghcr.io/prasadg193/botkube:latest
   image_templates:
-  - ghcr.io/prasadg193/botkube:{{ .Tag }}-amd64
-  - ghcr.io/prasadg193/botkube:{{ .Tag }}-arm64
-  - ghcr.io/prasadg193/botkube:{{ .Tag }}-armv7
+  - ghcr.io/prasadg193/botkube:latest-amd64
+  - ghcr.io/prasadg193/botkube:latest-arm64
+  - ghcr.io/prasadg193/botkube:latest-armv7
 
 release:
   github:
